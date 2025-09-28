@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos | Cívica Sports</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="/index.html" class="sidebar-link">
+                    <i class="fas fa-dumbbell sidebar-logo"></i>
+                    <span class="sidebar-title">Cívica Sports</span>
+                </a>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="/home.html"><i class="fas fa-home"></i><span>Inicio</span></a></li>
+                <li><a href="/productos.html" class="active"><i class="fas fa-dumbbell"></i><span>Productos</span></a></li>
+                <li><a href="/categorias.html"><i class="fas fa-tags"></i><span>Categorías</span></a></li>
+                <li><a href="/clientes.html"><i class="fas fa-users"></i><span>Clientes</span></a></li>
+                <li><a href="/pedidos.html"><i class="fas fa-shopping-cart"></i><span>Pedidos</span></a></li>
+                <li><a href="/estadisticas.html"><i class="fas fa-chart-line"></i><span>Estadísticas</span></a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <button class="sidebar-toggle"><i class="fas fa-bars"></i></button>
+                <div class="user-info">
+                    <div class="user-avatar"><i class="fas fa-user"></i></div>
+                    <div class="user-details">
+                        <span class="user-name" id="userName"></span>
+                        <span class="user-email" id="userEmail"></span>
+                    </div>
+                    <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                    <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></button>
+                    <button class="cart-btn" id="carritoBtn" style="position:relative;">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="carritoBadge" class="cart-badge">0</span>
+                    </button>
+                </div>
+            </header>
+            <div class="content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Productos</h2>
+                        <div style="display:flex;align-items:center;gap:0.5rem;">
+                            <input type="text" id="busquedaProducto" placeholder="Buscar producto..." style="padding:0.5rem 2rem 0.5rem 0.8rem;border-radius:6px;border:1px solid #ccc;">
+                            <i class="fas fa-search" style="margin-left:-2rem;color:#bbb;"></i>
+                            <button class="btn btn-primary" id="btnAddProducto"><i class="fas fa-plus"></i> Nuevo Producto</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="error-message" class="error-message" style="display:none;"></div>
+                        <table class="data-table" id="productosTable">
+                            <thead>
+                                <tr>
+                                    <th data-sort="id" class="sortable">ID <span class="sort-icons">▲▼</span></th>
+                                    <th data-sort="name" class="sortable">Nombre <span class="sort-icons">▲▼</span></th>
+                                    <th data-sort="categoryName" class="sortable">Categoría <span class="sort-icons">▲▼</span></th>
+                                    <th data-sort="price" class="sortable">Precio <span class="sort-icons">▲▼</span></th>
+                                    <th data-sort="stock" class="sortable">Stock <span class="sort-icons">▲▼</span></th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Productos aquí -->
+                            </tbody>
+                        </table>
+                        <button id="verMasProductosBtn" class="btn btn-outline" style="display:none;margin:1.5rem auto 0 auto;display:block;">Ver más</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Producto -->
+            <div class="modal" id="productoModal" style="display:none;">
+                <div class="modal-content">
+                    <span class="close" id="closeProductoModal">&times;</span>
+                    <h3 id="modalTitle">Nuevo Producto</h3>
+                    <form id="productoForm">
+                        <input type="hidden" id="productoId">
+                        <div class="form-group">
+                            <label for="productoNombre">Nombre</label>
+                            <input type="text" id="productoNombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productoCategoria">Categoría</label>
+                            <select id="productoCategoria" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="productoPrecio">Precio</label>
+                            <input type="number" id="productoPrecio" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productoStock">Stock</label>
+                            <input type="number" id="productoStock" min="0" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="guardarProductoBtn">Guardar</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Modal Carrito -->
+            <div class="modal" id="carritoModal" style="display:none;">
+                <div class="modal-content" style="max-width:600px;">
+                    <span class="close" id="closeCarritoModal">&times;</span>
+                    <h3>Confirmar Pedido</h3>
+                    <div id="carritoResumen"></div>
+                    <form id="formConfirmarPedido">
+                        <div class="form-group">
+                            <label for="carritoCliente">Cliente</label>
+                            <select id="carritoCliente" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="carritoFecha">Fecha</label>
+                            <input type="date" id="carritoFecha" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Confirmar y Guardar Pedido</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+   
+    <script src="js/theme.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/productos.js"></script>
+    <script src="js/roles.js"></script>
+</body>
+</html>

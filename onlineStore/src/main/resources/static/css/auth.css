@@ -1,0 +1,133 @@
+.auth-body {
+    background-color: #F5F5F5;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('/img/fondo_ondas_gris-claro.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.auth-card {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.auth-logo {
+    font-size: 2.5rem;
+    color: #EE880E;
+    margin-bottom: 10px;
+}
+
+.auth-title {
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.auth-form .form-control {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #BDBDBD;
+    margin-bottom: 15px;
+}
+
+.auth-form .form-control:focus {
+    border-color: #EE880E;
+    box-shadow: 0 0 0 0.25rem rgba(238, 136, 14, 0.25);
+}
+
+.auth-btn {
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 500;
+    background-color: #EE880E;
+    border: none;
+    transition: background-color 0.3s;
+    color: #fff;
+}
+
+.auth-btn:hover {
+    background-color: #FF5038;
+}
+
+.auth-link {
+    color: #EE880E;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+.auth-footer {
+    color: #BDBDBD;
+    font-size: 0.9rem;
+}
+
+/* Estilos para el tema oscuro */
+[data-theme="dark"] .auth-body {
+    background-color: #222222;
+    background-image: url('/img/fondo_ondas_gris-oscuro.png');
+}
+
+[data-theme="dark"] .auth-card {
+    background-color: #333333;
+    color: #F5F5F5;
+}
+
+[data-theme="dark"] .auth-title {
+    color: #F5F5F5;
+}
+
+[data-theme="dark"] .form-control {
+    background-color: #444444;
+    border-color: #444444;
+    color: #F5F5F5;
+}
+
+[data-theme="dark"] .form-control:focus {
+    background-color: #444444;
+    color: #F5F5F5;
+}
+
+[data-theme="dark"] .auth-footer {
+    color: #BDBDBD;
+}
+
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    display: none;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333333;
+}
+
+[data-theme="dark"] .form-group label {
+    color: #BDBDBD;
+}

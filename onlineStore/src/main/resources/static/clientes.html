@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes | Cívica Sports</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="/index.html" class="sidebar-link">
+                    <i class="fas fa-dumbbell sidebar-logo"></i>
+                    <span class="sidebar-title">Cívica Sports</span>
+                </a>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="/home.html"><i class="fas fa-home"></i><span>Inicio</span></a></li>
+                <li><a href="/productos.html"><i class="fas fa-dumbbell"></i><span>Productos</span></a></li>
+                <li><a href="/categorias.html"><i class="fas fa-tags"></i><span>Categorías</span></a></li>
+                <li><a href="/clientes.html" class="active"><i class="fas fa-users"></i><span>Clientes</span></a></li>
+                <li><a href="/pedidos.html"><i class="fas fa-shopping-cart"></i><span>Pedidos</span></a></li>
+                <li><a href="/estadisticas.html"><i class="fas fa-chart-line"></i><span>Estadísticas</span></a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <button class="sidebar-toggle"><i class="fas fa-bars"></i></button>
+                <div class="user-info">
+                    <div class="user-avatar"><i class="fas fa-user"></i></div>
+                    <div class="user-details">
+                        <span class="user-name" id="userName"></span>
+                        <span class="user-email" id="userEmail"></span>
+                    </div>
+                    <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                    <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></button>
+                    <button class="cart-btn" id="carritoBtn" style="position:relative;">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="carritoBadge" class="cart-badge">0</span>
+                    </button>
+                </div>
+            </header>
+            <div class="content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Clientes</h2>
+                        <button class="btn btn-primary" id="btnAddCliente"><i class="fas fa-plus"></i> Nuevo Cliente</button>
+                    </div>
+                    <div class="card-body">
+                        <div id="error-message" class="error-message" style="display:none;"></div>
+                        <!-- Añade esto en clientes.html, encima de la tabla -->
+                        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;">
+                            <input type="text" id="busquedaCliente" placeholder="Buscar cliente..." style="padding:0.5rem 2rem 0.5rem 0.8rem;border-radius:6px;border:1px solid #ccc;">
+                            <i class="fas fa-search" style="margin-left:-2rem;color:#bbb;"></i>
+                        </div>
+                        <table class="data-table" id="clientesTable">
+                            <thead>
+                                <tr>
+                                    <th data-sort="id" class="sortable">ID <span class="sort-icons">▲▼</span></th>
+                                    <th data-sort="nombre" class="sortable">Nombre <span class="sort-icons">▲▼</span></th>
+                                    <th data-sort="email" class="sortable">Email <span class="sort-icons">▲▼</span></th>
+                                    <th data-sort="telefono" class="sortable">Teléfono <span class="sort-icons">▲▼</span></th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Clientes aquí -->
+                            </tbody>
+                        </table>
+                        <button id="verMasClientesBtn" class="btn btn-outline" style="display:none;margin:1.5rem auto 0 auto;display:block;">Ver más</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Cliente -->
+            <div class="modal" id="clienteModal" style="display:none;">
+                <div class="modal-content">
+                    <span class="close" id="closeClienteModal">&times;</span>
+                    <h3 id="modalTitle">Nuevo Cliente</h3>
+                    <form id="clienteForm">
+                        <input type="hidden" id="clienteId">
+                        <div class="form-group">
+                            <label for="clienteNombre">Nombre</label>
+                            <input type="text" id="clienteNombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clienteEmail">Email</label>
+                            <input type="email" id="clienteEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clienteTelefono">Teléfono</label>
+                            <input type="text" id="clienteTelefono">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="guardarClienteBtn">Guardar</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Modal Carrito -->
+            <div class="modal" id="carritoModal" style="display:none;">
+                <div class="modal-content" style="max-width:600px;">
+                    <span class="close" id="closeCarritoModal">&times;</span>
+                    <h3>Confirmar Pedido</h3>
+                    <div id="carritoResumen"></div>
+                    <form id="formConfirmarPedido">
+                        <div class="form-group">
+                            <label for="carritoCliente">Cliente</label>
+                            <select id="carritoCliente" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="carritoFecha">Fecha</label>
+                            <input type="date" id="carritoFecha" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Confirmar y Guardar Pedido</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Modal Detalles Cliente -->
+            <div class="modal" id="clientePedidosModal" style="display:none;">
+                <div class="modal-content" style="max-width:700px;">
+                    <span class="close" id="closeClientePedidosModal">&times;</span>
+                    <h3>Pedidos del Cliente</h3>
+                    <div id="clientePedidosBody">
+                        <!-- Aquí se cargan los pedidos dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="js/theme.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/clientes.js"></script>
+    <script src="js/roles.js"></script>
+</body>
+</html>
